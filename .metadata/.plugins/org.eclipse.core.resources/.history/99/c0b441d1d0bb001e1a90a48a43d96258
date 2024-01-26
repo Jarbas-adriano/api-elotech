@@ -1,0 +1,5 @@
+package com.debitos.apidebitos.resources;
+
+public class DebitoResource {
+
+}

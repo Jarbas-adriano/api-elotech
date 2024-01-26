@@ -1,0 +1,11 @@
+package com.debitos.apidebitos.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.debitos.apidebitos.models.Debito;
+
+public interface DebitoRepository extends JpaRepository<Debito, Long>{
+	
+	Debito FindbyId(long id);
+
+}

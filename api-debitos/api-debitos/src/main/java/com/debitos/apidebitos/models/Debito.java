@@ -35,7 +35,7 @@ public class Debito implements Serializable {
 
 	private String nome;
 
-	@OneToMany(mappedBy = "debito",cascade = CascadeType.PERSIST,targetEntity = DebitoParcela.class)
+	@OneToMany(mappedBy = "debito",cascade = CascadeType.ALL,targetEntity = DebitoParcela.class,orphanRemoval = true)
 	private List<DebitoParcela> parcela =  new ArrayList<DebitoParcela>();
 
 

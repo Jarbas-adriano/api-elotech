@@ -7,5 +7,5 @@ import com.debitos.apidebitos.models.Debito;
 public interface DebitoRepository extends JpaRepository<Debito, Long>{
 	
 	Debito findById(long id);
-
+	
 }

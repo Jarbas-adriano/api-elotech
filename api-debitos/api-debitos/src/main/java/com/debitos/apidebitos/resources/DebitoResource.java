@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.debitos.apidebitos.models.Debito;
+import com.debitos.apidebitos.models.DebitoParcela;
+import com.debitos.apidebitos.repository.DebitoParcelaRepository;
 import com.debitos.apidebitos.repository.DebitoRepository;
 
 @RestController
@@ -24,14 +26,34 @@ public class DebitoResource {
 	public List<Debito> listaDebitos() {
 		return debitoRepository.findAll();
 	}
-	
+
 	@GetMapping("/debitos/{id}")
-	public Debito listaDebitosById(@PathVariable(value = "id") long id ) {
+	public Debito listaDebitosById(@PathVariable(value = "id") long id) {
 		return debitoRepository.findById(id);
 	}
-	
+
 	@PostMapping("/debitos")
-	public Debito saveDebito(@RequestBody Debito debito) {
-		return debitoRepository.save(debito);
+	public String saveDebito(@RequestBody Debito debito) {
+
+		try {
+
+			//System.out.println("Debito: " + debito.toString());
+
+			for (DebitoParcela parcela : debito.getParcela()) {
+				parcela.setDebito(debito);
+			}
+
+			debito.setParcela(debito.getParcela());
+
+			// System.out.println("Debito: "+debito.getParcela());
+
+			debitoRepository.save(debito);
+
+			return "OK";
+
+		} catch (Exception e) {
+			return "Erro: " + e;
+
+		}
 	}
 }

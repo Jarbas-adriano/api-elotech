@@ -4,11 +4,15 @@ import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
+
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.GenerationType;
 
 @Entity
@@ -18,20 +22,38 @@ public class DebitoParcela implements Serializable {
 private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	
 	private long id;
+	
+	private long numero;
 	
 	private Date dataVencimento;
 	
 	private double valor;	
 	
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY,targetEntity = Debito.class)
+    @JoinColumn(name = "debito_id",referencedColumnName = "id", nullable = false)
 	private Debito debito;
-
 	
     public long getId() {
 		return id;
+	}
+
+	public long getNumero() {
+		return numero;
+	}
+
+	public void setNumero(long numero) {
+		this.numero = numero;
+	}
+
+	public Debito getDebito() {
+		return debito;
+	}
+
+	public void setDebito(Debito debito) {
+		this.debito = debito;
 	}
 
 	public void setId(long id) {
@@ -53,6 +75,13 @@ private static final long serialVersionUID = 1L;
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
+
+	@Override
+	public String toString() {
+		return "DebitoParcela [id=" + id + ", numero=" + numero + ", dataVencimento=" + dataVencimento + ", valor="
+				+ valor + ", debito=" + debito + "]";
+	}
+	
 
 	
 }

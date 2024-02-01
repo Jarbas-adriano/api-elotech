@@ -1,6 +1,10 @@
 package com.debitos.apidebitos.models;
 
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Min;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,8 +32,10 @@ private static final long serialVersionUID = 1L;
 	
 	private long numero;
 	
+	@FutureOrPresent(message = "A data de Vencimento deve ser superior ou igual a data atual")
 	private Date dataVencimento;
 	
+	@Min(message = "O valor deve ser maior do que 0", value = 1)
 	private double valor;	
 	
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = Debito.class)

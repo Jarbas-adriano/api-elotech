@@ -2,6 +2,8 @@ package com.debitos.apidebitos.resources;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,8 @@ import com.debitos.apidebitos.models.Debito;
 import com.debitos.apidebitos.models.DebitoParcela;
 import com.debitos.apidebitos.repository.DebitoParcelaRepository;
 import com.debitos.apidebitos.repository.DebitoRepository;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -38,7 +42,7 @@ public class DebitoResource {
 	}
 
 	@PostMapping("/debitos")
-	public String saveDebito(@RequestBody Debito debito) {
+	public String saveDebito(@Valid @RequestBody Debito debito) {
 
 		try {
 
@@ -56,14 +60,14 @@ public class DebitoResource {
 
 			return "OK";
 
-		} catch (Exception e) {
+		} catch (JDBCException e) {
 			return "Erro: " + e;
 
 		}
 	}
 	
 	@DeleteMapping("/debitos")
-	public void DeletaDebitos(@RequestBody Debito debito) {
+	public void DeletaDebitos(@Valid @RequestBody Debito debito) {
 		 debitoRepository.delete(debito);
 	}
 	
@@ -73,7 +77,7 @@ public class DebitoResource {
 	}
 	
 	@PutMapping("/debitos")
-	public String AtualizaDebitos(@RequestBody Debito debito) {
+	public String AtualizaDebitos(@Valid @RequestBody Debito debito) {
 		
 		try {
 
@@ -91,7 +95,7 @@ public class DebitoResource {
 
 			return "OK";
 
-		} catch (Exception e) {
+		} catch (HibernateException e) {
 			return "Erro: " + e;
 
 		}

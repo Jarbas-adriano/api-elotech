@@ -1,12 +1,18 @@
 package com.debitos.apidebitos.models;
 
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
 
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -28,14 +34,18 @@ public class Debito implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 
 	private long id;
-
+    
+	@PastOrPresent(message = "A data de Lançamento deve ser menor ou igual a data atual")
 	private Date dataLancamento;
 
+	@CPF(message = "Informe um CPF Válido")
 	private String cpf;
 
 	private String nome;
 
+	@Valid
 	@OneToMany(mappedBy = "debito",cascade = CascadeType.ALL,targetEntity = DebitoParcela.class,orphanRemoval = true)
+	@NotEmpty(message = "O Débito deve conter ao menos uma parcela")
 	private List<DebitoParcela> parcela =  new ArrayList<DebitoParcela>();
 
 

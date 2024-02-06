@@ -40,6 +40,11 @@ public class DebitoResource {
 	public Debito listaDebitosById(@PathVariable(value = "id") long id) {
 		return debitoRepository.findById(id);
 	}
+	
+	@GetMapping("/debitos/sumValues")
+	public Double SumValues() {
+		 return debitoRepository.sumValues();
+	}
 
 	@PostMapping("/debitos")
 	public String saveDebito(@Valid @RequestBody Debito debito) {

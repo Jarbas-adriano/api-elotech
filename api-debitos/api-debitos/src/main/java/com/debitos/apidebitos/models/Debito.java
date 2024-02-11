@@ -50,7 +50,10 @@ public class Debito implements Serializable {
 
 
 	public List<DebitoParcela> getParcela() {
-		return parcela;
+		 if (parcela == null) {
+			 parcela = new ArrayList();
+	      }
+	      return parcela;
 	}
 
 	public void setParcela(List<DebitoParcela> parcela) {

@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -27,17 +29,21 @@ private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	
+	@JsonProperty
 	private long id;
-	
+
+	@JsonProperty
 	private long numero;
 	
+	@JsonProperty
 	@FutureOrPresent(message = "A data de Vencimento deve ser superior ou igual a data atual")
 	private Date dataVencimento;
 	
+	@JsonProperty
 	@Min(message = "O valor deve ser maior do que 0", value = 1)
 	private double valor;	
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = Debito.class)
     @JoinColumn(name = "debito_id",referencedColumnName = "id", nullable = false)
 	private Debito debito;
